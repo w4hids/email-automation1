@@ -9,28 +9,19 @@ jobs:
   send-email:
     runs-on: ubuntu-latest
     steps:
-      - name: Install Dependencies
-        run: sudo apt update && sudo apt install -y sendemail libio-socket-ssl-perl libnet-ssleay-perl
+      - name: Checkout Repository
+        uses: actions/checkout@v4
 
-      - name: Send Email
+      - name: Set Up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Install Dependencies (if required)
+        run: pip install -r requirements.txt || echo "No dependencies"
+
+      - name: Run Email Script
         env:
-          EMAIL_USER: ${{ secrets.EMAIL_USER }} # Store this in GitHub Secrets
-          EMAIL_PASS: ${{ secrets.EMAIL_PASS }} # Store this in GitHub Secrets
-        run: |
-          sendemail -f "admission@rjcollege.edu.in" \
-                    -xu "$EMAIL_USER" \
-                    -xp "$EMAIL_PASS" \
-                    -s "smtp-relay.brevo.com:587" \
-                    -t "samaniwahiduddin382@gmail.com" \
-                    -t "user2@example.com" \
-                    -t "user3@example.com" \
-                    -t "user4@example.com" \
-                    -t "user5@example.com" \
-                    -u "Attendance Reminder" \
-                    -m "Dear Student,
-
-We have noticed irregular attendance in your classes. Regular attendance is vital for your academic progress and overall success.
-
-If you are facing any challenges, feel free to reach out for support. Please ensure regular attendance moving forward." \
-                    -o tls=yes \
-                    -o message-header="From: R.J. College <admission@rjcollege.edu.in>"
+          EMAIL_USER: ${{ secrets.EMAIL_USER }}
+          EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
+        run: python send_email.py
