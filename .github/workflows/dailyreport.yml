@@ -1,0 +1,31 @@
+name: Daily Email Sender
+
+on:
+  schedule:
+    - cron: '30 16 * * *' # 10 PM IST (GitHub UTC time hota hai, so 16:30 UTC = 10 PM IST)
+
+jobs:
+  send-email:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install sendemail
+        run: sudo apt update && sudo apt install -y sendemail
+
+      - name: Send Email
+        env:
+          EMAIL_USER: ${{ secrets.EMAIL_USER }}
+          EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
+        run: |
+          sendemail -xu "$EMAIL_USER" \
+                    -xp "$EMAIL_PASS" \
+                    -s "smtp-relay.brevo.com:587" \
+                    -f "admission@rjcollege.edu.in" \
+                    -t "samaniwahiduddin382@gmail.com,user2@example.com,user3@example.com,user4@example.com,user5@example.com" \
+                    -u "Attendance Reminder" \
+                    -m "Dear Student, 
+
+We have noticed irregular attendance in your classes. Regular attendance is vital for your academic progress and overall success.
+
+If you are facing any challenges, feel free to reach out for support. Please ensure regular attendance moving forward." \
+                    -o tls=yes \
+                    -o message-header="From: R.J. College <admission@rjcollege.edu.in>"
