@@ -13,10 +13,10 @@ PASSWORD = os.environ.get("EMAIL_PASS")
 # Email Recipients (Add as many as needed)
 recipients = [
     "samaniwahiduddin382@gmail.com",
-    "user2@example.com",
-    "user3@example.com",
-    "user4@example.com",
-    "user5@example.com"
+    "singhshreya9445@gmail.com",
+    "singhshreya9445@gmail.com",
+    "singhshreya9445@gmail.com",
+    "singhshreya9445@gmail.com"
 ]
 
 # Email Message
