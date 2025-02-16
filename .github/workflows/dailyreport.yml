@@ -2,27 +2,32 @@ name: Daily Email Sender
 
 on:
   schedule:
-    - cron: '30 16 * * *' # 10 PM IST (GitHub UTC time hota hai, so 16:30 UTC = 10 PM IST)
+    - cron: '0 16 * * *' # Runs every day at 10:00 PM IST (16:00 UTC)
+  workflow_dispatch: # Allows manual trigger from GitHub Actions
 
 jobs:
   send-email:
     runs-on: ubuntu-latest
     steps:
-      - name: Install sendemail
-        run: sudo apt update && sudo apt install -y sendemail
+      - name: Install Dependencies
+        run: sudo apt update && sudo apt install -y sendemail libio-socket-ssl-perl libnet-ssleay-perl
 
       - name: Send Email
         env:
-          EMAIL_USER: ${{ secrets.EMAIL_USER }}
-          EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
+          EMAIL_USER: ${{ secrets.EMAIL_USER }} # Store this in GitHub Secrets
+          EMAIL_PASS: ${{ secrets.EMAIL_PASS }} # Store this in GitHub Secrets
         run: |
-          sendemail -xu "$EMAIL_USER" \
+          sendemail -f "admission@rjcollege.edu.in" \
+                    -xu "$EMAIL_USER" \
                     -xp "$EMAIL_PASS" \
                     -s "smtp-relay.brevo.com:587" \
-                    -f "admission@rjcollege.edu.in" \
-                    -t "samaniwahiduddin382@gmail.com,user2@example.com,user3@example.com,user4@example.com,user5@example.com" \
+                    -t "samaniwahiduddin382@gmail.com" \
+                    -t "user2@example.com" \
+                    -t "user3@example.com" \
+                    -t "user4@example.com" \
+                    -t "user5@example.com" \
                     -u "Attendance Reminder" \
-                    -m "Dear Student, 
+                    -m "Dear Student,
 
 We have noticed irregular attendance in your classes. Regular attendance is vital for your academic progress and overall success.
 
