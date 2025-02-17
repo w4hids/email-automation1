@@ -1,6 +1,8 @@
 import smtplib
 import ssl
 import os
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 
 # SMTP Configuration
 SMTP_SERVER = "smtp.gmail.com"
@@ -10,17 +12,16 @@ PORT = 465  # SSL Port
 USERNAME = os.environ.get("EMAIL_USER")
 PASSWORD = os.environ.get("EMAIL_PASS")
 
-# Email Recipients (Add as many as needed)
-recipients = [
+# Email Recipients (Unique)
+recipients = list(set([
     "samaniwahiduddin382@gmail.com",
-    "singhshreya9445@gmail.com",
-    "singhshreya9445@gmail.com",
-    "singhshreya9445@gmail.com",
     "singhshreya9445@gmail.com"
-]
+]))
 
-# Email Message
+# Email Subject
 subject = "Daily Expense Reminder: Log Your Spending Today"
+
+# Email Body (HTML)
 body = """\
 <!DOCTYPE html>
 <html>
@@ -93,19 +94,25 @@ body = """\
 </html>
 """
 
-message = f"Subject: {subject}\n\n{body}"
-
 # Create SSL context
 context = ssl.create_default_context()
 
-# Send email to all recipients
+# Sending email
 try:
     with smtplib.SMTP_SSL(SMTP_SERVER, PORT, context=context) as server:
         server.login(USERNAME, PASSWORD)
-        for recipient in recipients:
-            server.sendmail(USERNAME, recipient, message)
-            print(f"Email sent to {recipient}")
 
-    print("All emails sent successfully!")
+        for recipient in recipients:
+            msg = MIMEMultipart()
+            msg["From"] = USERNAME
+            msg["To"] = recipient
+            msg["Subject"] = subject
+            msg.attach(MIMEText(body, "html"))
+
+            server.sendmail(USERNAME, recipient, msg.as_string())
+            print(f"✅ Email sent to {recipient}")
+
+    print("✅✅✅ All emails sent successfully!")
 except Exception as e:
-    print(f"Error sending emails: {e}")
+    print(f"❌ Error sending emails: {e}")
+    
