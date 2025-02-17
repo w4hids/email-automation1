@@ -20,13 +20,77 @@ recipients = [
 ]
 
 # Email Message
-subject = "Attendance Reminder"
+subject = "Daily Expense Reminder: Log Your Spending Today"
 body = """\
-Dear Student,
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            margin: auto;
+        }
+        h2 {
+            color: #2c3e50;
+            text-align: center;
+        }
+        p {
+            font-size: 16px;
+            color: #555;
+            line-height: 1.6;
+        }
+        .footer {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #777;
+            text-align: center;
+        }
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 20px 0;
+            font-size: 16px;
+            color: #ffffff;
+            background-color: #007bff;
+            text-decoration: none;
+            border-radius: 5px;
+            text-align: center;
+        }
+        .button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
 
-We have noticed irregular attendance in your classes. Regular attendance is vital for your academic progress and overall success.
+<div class="container">
+    <h2>📌 Daily Expense Reminder</h2>
+    <p>Dear User,</p>
+    <p>This is a friendly reminder to log your daily expenses to keep track of your financial health.</p>
+    <p>Regularly updating your expenses will help you stay within budget and make informed financial decisions.</p>
+    
+    <p style="text-align: center;">
+        <a href="YOUR_WEBSITE_LINK" class="button">Log Your Expenses</a>
+    </p>
+    
+    <div class="footer">
+        <p>Best Regards,</p>
+        <p>FinCascade Team</p>
+    </div>
+</div>
 
-If you are facing any challenges, feel free to reach out for support. Please ensure regular attendance moving forward.
+</body>
+</html>
 """
 
 message = f"Subject: {subject}\n\n{body}"
