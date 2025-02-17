@@ -19,7 +19,7 @@ recipients = list(set([
 ]))
 
 # Email Subject
-subject = "Daily Expense Reminder: Log Your Spending Today"
+subject = "Daily Expense Reminder: Log Your Today's Spending"
 
 # Email Body (HTML)
 body = """\
@@ -75,9 +75,9 @@ body = """\
 <body>
 
 <div class="container">
-    <h2>📌 Daily Expense Reminder</h2>
+    <h2>📌 Today's Expense Reminder</h2>
     <p>Dear User,</p>
-    <p>This is a friendly reminder to log your daily expenses to keep track of your financial health.</p>
+    <p>This is a friendly reminder to log your Today's expenses to keep track of your financial health.</p>
     <p>Regularly updating your expenses will help you stay within budget and make informed financial decisions.</p>
     
     <p style="text-align: center;">
@@ -86,7 +86,7 @@ body = """\
     
     <div class="footer">
         <p>Best Regards,</p>
-        <p>FinCascade Team</p>
+        <p><b>Shreya Singh</b></p>
     </div>
 </div>
 
